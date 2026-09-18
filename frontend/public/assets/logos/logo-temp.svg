@@ -1,0 +1,20 @@
+<svg width="180" height="48" viewBox="0 0 180 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Temporary Cunga Logo - Replace with actual logo files -->
+  <defs>
+    <linearGradient id="cungaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366F1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Icon Circle -->
+  <rect x="4" y="4" width="40" height="40" rx="12" fill="url(#cungaGradient)"/>
+  
+  <!-- C Letter -->
+  <path d="M24 14C18.477 14 14 18.477 14 24C14 29.523 18.477 34 24 34C26.5 34 28.8 33 30.5 31.3" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+  
+  <!-- CUNGA Text -->
+  <text x="56" y="32" font-family="Poppins, sans-serif" font-weight="700" font-size="20" fill="#1F2937">
+    CUNGA
+  </text>
+</svg>
