@@ -11,6 +11,9 @@ import { BRAND_INFO } from '@constants/brand'
 import { marketplaceService } from '@services/marketplaceService'
 import { useAppDispatch } from '@hooks'
 import { addItem } from '@store/slices/cartSlice'
+import { toggleWishlist, selectIsWishlisted } from '@store/slices/wishlistSlice'
+import { useSelector } from 'react-redux'
+import type { RootState } from '@store'
 
 interface Review {
   id: number
@@ -61,12 +64,12 @@ interface Product {
 const ProductDetails = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const dispatch     = useAppDispatch()
+  const wishlisted   = useSelector((state: RootState) => selectIsWishlisted(Number(id) || 1)(state))
 
   const [selectedImage, setSelectedImage] = useState(0)
   const [quantity, setQuantity] = useState(1)
   const [selectedTab, setSelectedTab] = useState<'description' | 'specs' | 'reviews'>('description')
-  const [isWishlisted, setIsWishlisted] = useState(false)
   const [addedToCart, setAddedToCart] = useState(false)
 
   // ── API state ──────────────────────────────────────────
@@ -802,11 +805,20 @@ Perfect for professionals, content creators, and anyone who demands the best fro
                 </Button>
                 <div className="grid grid-cols-2 gap-3">
                   <Button
-                    onClick={() => setIsWishlisted(!isWishlisted)}
+                    onClick={() => dispatch(toggleWishlist({
+                      id:          displayProduct.id,
+                      name:        displayProduct.name,
+                      price:       displayProduct.price,
+                      oldPrice:    displayProduct.oldPrice,
+                      image:       displayProduct.images[0] || '',
+                      seller_name: displayProduct.seller.name,
+                      shop_slug:   displayProduct.seller.id.toString(),
+                      category:    displayProduct.category,
+                    }))}
                     variant="outline"
-                    className={`w-full ${isWishlisted ? 'border-red-300 bg-red-50' : ''}`}
+                    className={`w-full ${wishlisted ? 'border-red-300 bg-red-50' : ''}`}
                   >
-                    <Heart size={18} className={isWishlisted ? 'fill-red-500 text-red-500' : ''} />
+                    <Heart size={18} className={wishlisted ? 'fill-red-500 text-red-500' : ''} />
                   </Button>
                   <Button onClick={handleShare} variant="outline" className="w-full">
                     <Share2 size={18} />

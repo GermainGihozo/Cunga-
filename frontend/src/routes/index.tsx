@@ -1,14 +1,14 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+﻿import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAppSelector } from '@hooks'
 import { UserRole } from '@types'
 import { DashboardLayout } from '@components/layout'
 import { lazy, Suspense } from 'react'
 
-// ── Auth pages ────────────────────────────────────────────
+// â”€â”€ Auth pages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const Login    = lazy(() => import('@pages/auth/Login'))
 const Register = lazy(() => import('@pages/auth/Register'))
 
-// ── Admin pages ───────────────────────────────────────────
+// â”€â”€ Admin pages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const AdminDashboard    = lazy(() => import('@pages/admin/Dashboard'))
 const AdminUsers        = lazy(() => import('@pages/admin/Users'))
 const AdminBranches     = lazy(() => import('@pages/admin/Branches'))
@@ -18,13 +18,13 @@ const AdminReports      = lazy(() => import('@pages/admin/Reports'))
 const StyleGuide        = lazy(() => import('@pages/admin/StyleGuide'))
 const MarketplaceAdminPage = lazy(() => import('@pages/admin/MarketplaceAdmin'))
 
-// ── Branch pages ──────────────────────────────────────────
+// â”€â”€ Branch pages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const BranchDashboard = lazy(() => import('@pages/branch/Dashboard'))
 const Products        = lazy(() => import('@pages/branch/Products'))
 const Sales           = lazy(() => import('@pages/branch/Sales'))
 const Inventory       = lazy(() => import('@pages/branch/Inventory'))
 
-// ── Public / Marketplace pages ────────────────────────────
+// â”€â”€ Public / Marketplace pages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const LandingPage        = lazy(() => import('@pages/LandingPage'))
 const MarketplaceLanding = lazy(() => import('@pages/MarketplaceLanding'))
 const ProductListing     = lazy(() => import('@pages/ProductListing'))
@@ -34,28 +34,30 @@ const Cart               = lazy(() => import('@pages/Cart'))
 const OrderTracking      = lazy(() => import('@pages/OrderTracking'))
 const SellerStorefront   = lazy(() => import('@pages/SellerStorefront'))
 
-// ── Seller pages ──────────────────────────────────────────
+// â”€â”€ Seller pages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const SellerLogin          = lazy(() => import('@pages/seller/SellerLogin'))
 const SellerRegister       = lazy(() => import('@pages/seller/SellerRegister'))
 const SellerOnboarding     = lazy(() => import('@pages/seller/SellerOnboarding'))
 const SellerForgotPassword = lazy(() => import('@pages/seller/SellerForgotPassword'))
 const SellerDashboard      = lazy(() => import('@pages/SellerDashboard'))
 const NotFoundPage     = lazy(() => import('@pages/NotFound'))
-const StaticPage       = lazy(() => import('@pages/StaticPage'))
+const StaticPage  = lazy(() => import('@pages/StaticPage'))
+const BuyerOrders = lazy(() => import('@pages/BuyerOrders'))
+const Wishlist    = lazy(() => import('@pages/Wishlist'))
 
-// ─────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Spinners / Guards
-// ─────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const LoadingSpinner = () => (
   <div className="flex items-center justify-center min-h-screen bg-gray-50">
     <div className="flex flex-col items-center gap-4">
       <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-200 border-t-primary-600" />
-      <p className="text-sm text-gray-400 font-medium">Loading…</p>
+      <p className="text-sm text-gray-400 font-medium">Loadingâ€¦</p>
     </div>
   </div>
 )
 
-// ── SaaS / Admin guard ────────────────────────────────────
+// â”€â”€ SaaS / Admin guard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 interface ProtectedRouteProps {
   children: React.ReactNode
   allowedRoles?: UserRole[]
@@ -73,7 +75,7 @@ const ProtectedRoute = ({ children, allowedRoles }: ProtectedRouteProps) => {
   return <>{children}</>
 }
 
-// ── Seller auth guard ─────────────────────────────────────
+// â”€â”€ Seller auth guard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Reads from localStorage (seller JWT is independent of Redux store)
 const SellerRoute = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem('seller_token')
@@ -81,7 +83,7 @@ const SellerRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>
 }
 
-// ── Seller "already logged in" redirect ───────────────────
+// â”€â”€ Seller "already logged in" redirect â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Prevents a logged-in seller from visiting /seller/login again
 const SellerGuestRoute = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem('seller_token')
@@ -89,15 +91,15 @@ const SellerGuestRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>
 }
 
-// ─────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // App Routes
-// ─────────────────────────────────────────────────────────
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export const AppRoutes = () => {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <Routes>
 
-        {/* ── Marketplace / Public ── */}
+        {/* â”€â”€ Marketplace / Public â”€â”€ */}
         <Route path="/"                     element={<MarketplaceLanding />} />
         <Route path="/products"             element={<ProductListing />} />
         <Route path="/product/:id"          element={<ProductDetails />} />
@@ -107,6 +109,8 @@ export const AppRoutes = () => {
         <Route path="/cart"                 element={<Cart />} />
         <Route path="/order"                element={<OrderTracking />} />
         <Route path="/order/:ref"           element={<OrderTracking />} />
+        <Route path="/orders"               element={<BuyerOrders />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/shop/:slug"           element={<SellerStorefront />} />
         <Route path="/saas"                 element={<LandingPage />} />
         <Route path="/terms"                element={<StaticPage />} />
@@ -114,13 +118,13 @@ export const AppRoutes = () => {
         <Route path="/cookies"              element={<StaticPage />} />
         <Route path="/contact"              element={<StaticPage />} />
 
-        {/* ── SaaS Admin / Staff auth ── */}
+        {/* â”€â”€ SaaS Admin / Staff auth â”€â”€ */}
         <Route path="/login"    element={<Login />} />
         <Route path="/register" element={<Register />} />
 
         <Route path="/seller/forgot-password" element={<SellerForgotPassword />} />
 
-        {/* ── Seller auth (guest-only) ── */}
+        {/* â”€â”€ Seller auth (guest-only) â”€â”€ */}
         <Route
           path="/seller/login"
           element={
@@ -138,7 +142,7 @@ export const AppRoutes = () => {
           }
         />
 
-        {/* ── Seller protected ── */}
+        {/* â”€â”€ Seller protected â”€â”€ */}
         <Route
           path="/seller/onboarding"
           element={
@@ -156,7 +160,7 @@ export const AppRoutes = () => {
           }
         />
 
-        {/* ── Admin routes ── */}
+        {/* â”€â”€ Admin routes â”€â”€ */}
         <Route
           path="/admin/*"
           element={
@@ -175,7 +179,7 @@ export const AppRoutes = () => {
           <Route path="marketplace" element={<MarketplaceAdminPage />} />
         </Route>
 
-        {/* ── Branch routes ── */}
+        {/* â”€â”€ Branch routes â”€â”€ */}
         <Route
           path="/branch/*"
           element={
@@ -190,7 +194,7 @@ export const AppRoutes = () => {
           <Route path="inventory" element={<Inventory />} />
         </Route>
 
-        {/* ── Fallback 404 ── */}
+        {/* â”€â”€ Fallback 404 â”€â”€ */}
         <Route path="*" element={<NotFoundPage />} />
 
       </Routes>

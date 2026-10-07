@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+﻿import { useState, useEffect, useCallback } from 'react'
 import { Link, useSearchParams, useParams } from 'react-router-dom'
 import {
   Search,
@@ -24,6 +24,9 @@ import { BRAND_INFO } from '@constants/brand'
 import { marketplaceService, MarketProduct } from '@services/marketplaceService'
 import { useAppDispatch } from '@hooks'
 import { addItem } from '@store/slices/cartSlice'
+import { toggleWishlist, selectIsWishlisted } from '@store/slices/wishlistSlice'
+import { useSelector } from 'react-redux'
+import type { RootState } from '@store'
 
 interface Product {
   id: number
@@ -42,7 +45,7 @@ interface Product {
   featured: boolean
 }
 
-/** Map API product → local Product shape */
+/** Map API product â†’ local Product shape */
 const mapApiProduct = (p: MarketProduct): Product => ({
   id:       p.id,
   name:     p.name,
@@ -69,7 +72,7 @@ const ProductListing = () => {
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '')
 
   // Category comes from either URL path (/category/electronics) or query param (?category=)
-  // Normalize slug → display label (e.g. "fashion" → "Fashion & Clothing")
+  // Normalize slug â†’ display label (e.g. "fashion" â†’ "Fashion & Clothing")
   const CATEGORY_SLUG_MAP: Record<string, string> = {
     electronics:   'Electronics',
     fashion:       'Fashion & Clothing',
@@ -96,7 +99,7 @@ const ProductListing = () => {
   const [selectedRating, setSelectedRating] = useState(0)
   const [sortBy, setSortBy] = useState('relevance')
 
-  // ── API state ──────────────────────────────────────────
+  // â”€â”€ API state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const [apiProducts, setApiProducts] = useState<Product[]>([])
   const [apiLoading, setApiLoading] = useState(false)
   const [apiTotal, setApiTotal]     = useState(0)
@@ -126,7 +129,7 @@ const ProductListing = () => {
       setApiTotal(result.pagination.total)
       setUsingApi(true)
     } catch {
-      // API unavailable — keep static fallback data
+      // API unavailable â€” keep static fallback data
       setUsingApi(false)
     } finally {
       setApiLoading(false)
@@ -135,7 +138,7 @@ const ProductListing = () => {
 
   useEffect(() => { fetchProducts() }, [fetchProducts])
 
-  // Sync URL params → state when navigating to this page
+  // Sync URL params â†’ state when navigating to this page
   useEffect(() => {
     const q   = searchParams.get('q')
     const cat = routeCategory || searchParams.get('category')
@@ -731,7 +734,7 @@ const ProductListing = () => {
                   ))}
                   {selectedRating > 0 && (
                     <span className="inline-flex items-center gap-1 px-3 py-1 bg-primary-100 text-primary-700 text-sm rounded-full">
-                      {selectedRating}★ & Up
+                      {selectedRating}â˜… & Up
                       <button onClick={() => setSelectedRating(0)} className="hover:bg-primary-200 rounded-full p-0.5">
                         <X size={14} />
                       </button>
@@ -826,6 +829,8 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, viewMode, formatPrice, onAddToCart }: ProductCardProps) => {
+  const dispatch    = useAppDispatch()
+  const isWishlisted = useSelector((state: RootState) => selectIsWishlisted(product.id)(state))
   const [added, setAdded] = useState(false)
 
   const handleAdd = (e: React.MouseEvent) => {
@@ -833,6 +838,20 @@ const ProductCard = ({ product, viewMode, formatPrice, onAddToCart }: ProductCar
     onAddToCart()
     setAdded(true)
     setTimeout(() => setAdded(false), 1800)
+  }
+
+  const handleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault()
+    dispatch(toggleWishlist({
+      id:          product.id,
+      name:        product.name,
+      price:       product.price,
+      oldPrice:    product.oldPrice,
+      image:       product.image,
+      seller_name: product.seller,
+      shop_slug:   '',
+      category:    product.category,
+    }))
   }
 
   if (viewMode === 'list') {
@@ -922,9 +941,7 @@ const ProductCard = ({ product, viewMode, formatPrice, onAddToCart }: ProductCar
           {added ? <Check size={16} /> : <ShoppingCart size={16} />}
         </button>
         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-          <button className="p-2 bg-white rounded-full shadow-lg hover:bg-red-50 transition-colors">
-            <Heart size={18} className="text-gray-600 hover:text-red-500" />
-          </button>
+          <button onClick={handleWishlist} className={`p-2 bg-white rounded-full shadow-lg transition-colors ${isWishlisted ? "bg-red-50" : "hover:bg-red-50"}`}><Heart size={18} className={isWishlisted ? "fill-red-500 text-red-500" : "text-gray-600 hover:text-red-500"} /></button>
         </div>
         {!product.inStock && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">

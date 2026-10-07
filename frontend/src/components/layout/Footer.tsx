@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 import { Heart, TrendingUp } from 'lucide-react'
 import { BRAND_INFO } from '@constants/brand'
 
@@ -78,7 +78,7 @@ const Footer: React.FC = () => {
             <h3 className="font-display font-bold text-gray-900 mb-4">Support</h3>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link to="/help" className="text-gray-600 hover:text-primary-600 transition-colors font-medium hover:translate-x-1 inline-block">
+                <Link to="/contact" className="text-gray-600 hover:text-primary-600 transition-colors font-medium hover:translate-x-1 inline-block">
                   Help Center
                 </Link>
               </li>
@@ -111,7 +111,7 @@ const Footer: React.FC = () => {
         <div className="mt-8 pt-8 border-t border-gray-300">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-gray-600 font-medium">
-              © {currentYear} {BRAND_INFO.name}. All rights reserved.
+              Â© {currentYear} {BRAND_INFO.name}. All rights reserved.
             </p>
             <div className="flex items-center gap-6 text-sm text-gray-600">
               <Link to="/privacy" className="hover:text-primary-600 transition-colors font-medium">

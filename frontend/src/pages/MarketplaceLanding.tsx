@@ -10,13 +10,15 @@ import { BRAND_INFO } from '@constants/brand'
 import { marketplaceService, MarketProduct, FeaturedData } from '@services/marketplaceService'
 import { useSelector } from 'react-redux'
 import { selectCartCount } from '@store/slices/cartSlice'
+import { selectWishlistCount } from '@store/slices/wishlistSlice'
 import type { RootState } from '@store'
 
 const MarketplaceLanding = () => {
   const navigate = useNavigate()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const cartCount = useSelector((state: RootState) => selectCartCount(state))
+  const cartCount     = useSelector((state: RootState) => selectCartCount(state))
+  const wishlistCount = useSelector((state: RootState) => selectWishlistCount(state))
 
   const handleSearch = () => {
     const q = searchQuery.trim()
@@ -188,6 +190,14 @@ const MarketplaceLanding = () => {
                   {cartCount > 9 ? '9+' : cartCount}
                 </span>
               </Link>
+              <Link to="/wishlist" className="relative p-2 touch-manipulation hidden sm:block">
+                <Heart size={24} className={`transition-colors ${wishlistCount > 0 ? 'text-red-500 fill-red-500' : 'text-gray-600'}`} />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                    {wishlistCount > 9 ? '9+' : wishlistCount}
+                  </span>
+                )}
+              </Link>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="lg:hidden p-2"
@@ -241,6 +251,9 @@ const MarketplaceLanding = () => {
               <Link to="/order" className="font-medium text-gray-700 hover:text-blue-600 transition-colors">
                 Track Order
               </Link>
+              <Link to="/orders" className="font-medium text-gray-700 hover:text-blue-600 transition-colors">
+                My Orders
+              </Link>
             </div>
           </div>
         </div>
@@ -283,6 +296,13 @@ const MarketplaceLanding = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 📦 Track My Order
+              </Link>
+              <Link 
+                to="/orders" 
+                className="block py-3 px-4 text-gray-700 hover:bg-primary-50 rounded-lg transition-colors active:bg-primary-100"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                🛒 My Orders
               </Link>
               <Link 
                 to="/seller/register" 
@@ -1260,18 +1280,18 @@ const MarketplaceLanding = () => {
               <h3 className="text-white font-bold mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 <li><Link to="/products" className="hover:text-primary-400 transition-colors">Shop</Link></li>
-                <li><Link to="/categories" className="hover:text-primary-400 transition-colors">Categories</Link></li>
+                <li><Link to="/products" className="hover:text-primary-400 transition-colors">Categories</Link></li>
                 <li><Link to="/products?sort=popular" className="hover:text-primary-400 transition-colors">Sellers</Link></li>
-                <li><Link to="/deals" className="hover:text-primary-400 transition-colors">Hot Deals</Link></li>
+                <li><Link to="/products?sort=trending" className="hover:text-primary-400 transition-colors">Hot Deals</Link></li>
               </ul>
             </div>
 
             <div>
               <h3 className="text-white font-bold mb-4">Support</h3>
               <ul className="space-y-2">
-                <li><Link to="/help" className="hover:text-primary-400 transition-colors">Help Center</Link></li>
-                <li><Link to="/returns" className="hover:text-primary-400 transition-colors">Returns</Link></li>
-                <li><Link to="/shipping" className="hover:text-primary-400 transition-colors">Shipping Info</Link></li>
+                <li><Link to="/contact" className="hover:text-primary-400 transition-colors">Help Center</Link></li>
+                <li><Link to="/contact" className="hover:text-primary-400 transition-colors">Returns</Link></li>
+                <li><Link to="/contact" className="hover:text-primary-400 transition-colors">Shipping Info</Link></li>
                 <li><Link to="/contact" className="hover:text-primary-400 transition-colors">Contact Us</Link></li>
               </ul>
             </div>
@@ -1282,7 +1302,7 @@ const MarketplaceLanding = () => {
                 <li><Link to="/seller/register" className="hover:text-primary-400 transition-colors">Start Selling</Link></li>
                 <li><Link to="/pricing" className="hover:text-primary-400 transition-colors">Pricing Plans</Link></li>
                 <li><Link to="/seller/dashboard" className="hover:text-primary-400 transition-colors">Seller Dashboard</Link></li>
-                <li><Link to="/seller-guide" className="hover:text-primary-400 transition-colors">Seller Guide</Link></li>
+                <li><Link to="/pricing" className="hover:text-primary-400 transition-colors">Seller Guide</Link></li>
               </ul>
             </div>
           </div>
